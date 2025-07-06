@@ -397,47 +397,108 @@
 </div>
 
 </section>
-<section id="história" class="slide level2">
-<h2>História</h2>
-<hr style="border:1px solid #ccc; margin-top: 10px; margin-bottom: 20px;">
-<p>Nomeado por conta de Andrey Kolmogorov e Nikolai Smirnov<sup>1</sup>.</p>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>Os dois foram matemáticos russos</p></li></ol></aside></section>
+<section id="história-do-teste" class="slide level2">
+<h2>História do teste</h2>
+<h3 id="necessidade">Necessidade</h3>
+<p>Necessidade de criar uma forma simples e não paramétrica de verificar se os dados <strong>seguem uma distribuição conhecida</strong> ou se <strong>duas amostras são semelhantes</strong>, sem precisar assumir <em>normalidade</em>.</p>
+<h3 id="surgimento">Surgimento</h3>
+<p>1933 – O matemático <strong>Andrey Kolmogorov</strong> (russo) formulou a base teórica do teste, introduzindo a função de <em>distribuição empírica</em> e propondo um método para medir a diferença entre ela e uma <em>distribuição teórica</em>, ou seja, apenas para <strong>uma amostra</strong>.</p>
+<p>1948 – O estatístico <strong>Nikolai Smirnov</strong>, também russo, expandiu e formalizou o trabalho de Kolmogorov, tornando o teste mais aplicável na prática estatística e criando a versão para <strong>duas amostras</strong>.</p>
+</section>
 <section id="objetivo" class="slide level2">
 <h2>Objetivo</h2>
-<hr style="border:1px solid #ccc; margin-top: 10px; margin-bottom: 20px;">
-<p>Também conhecido como <strong>teste K-S</strong> ou <strong>teste KS</strong></p>
-<p>Este teste também pode ser utilizado para comparar a igualdade das distribuições de duas amostras indepedentes.</p>
-<p>O Teste de Kolmogorov-Smirnov é utilizado para comparar a distribuição de probabilidade entre dois grupos independentes (ou não pareados), podendo ser de qualquer distribuição. A construção desse teste é sensível a qualquer diferença de tendência central, dispersão, assimetria e curtose entre as distribuições postas em comparação. Com isso, o resultado do teste é fortemente impactado caso as distribuições tenham valores distintos entre essas medidas.</p>
+<p>Também conhecido como <strong>Teste K-S</strong> ou <strong>Teste KS</strong>, o Teste de Kolmogorov-Smirnov é utilizado para verificar se:</p>
+<ul>
+<li><p>Uma amostra segue uma determinada distribuição teórica (como normal, uniforme, etc.) → teste de aderência</p></li>
+<li><p>Duas amostras, independentes/não pareadas, vêm da mesma distribuição → teste de comparação entre distribuições</p></li>
+</ul>
+<blockquote>
+<p><strong>Exigências:</strong> requer que os dados seguem escala ordinal.</p>
+</blockquote>
 </section>
-<section id="exigências" class="slide level2">
-<h2>Exigências</h2>
+<section id="limitações" class="slide level2">
+<h2>Limitações</h2>
+<p><strong>1. Sensibilidade</strong></p>
+<p>A construção desse teste é sensível a qualquer diferença de tendência central, dispersão, assimetria e curtose entre as distribuições postas em comparação. Com isso, o resultado do teste é fortemente impactado caso as distribuições tenham valores distintos entre essas medidas.</p>
+<p><strong>2. Especificação dos parâmetros</strong></p>
+<p>Requer que a distribuição teórica seja completamente especificada (sem estimar parâmetros dos dados). Se os parâmetros forem estimados da própria amostra (ex: média e desvio padrão), deve-se usar o teste de Shapiro-Wilk ou o teste de Lilliefors no lugar.</p>
 </section>
 <section id="hipóteses" class="slide level2">
 <h2>Hipóteses</h2>
 <p>As hipóteses apresentam a forma abaixo:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Uma amostra</strong></p>
 <p><span class="math display">\[
 \left\{
 \begin{array}{ll}
-H_0: &amp; \text{distribuição}_1 = \text{distribuição}_2 \text{,} \\
-H_1: &amp; \text{distribuição}_1 \neq \text{distribuição}_2 \text{.}
+H_0: &amp; F(x) = F_{0}(x) \text{;} \\
+H_1: &amp; F(x) \neq F_{0}(x) \text{.}
+\end{array}
+\right.
+\]</span> <span class="math inline">\(S(x)\)</span> é a função de distribuição empírica da amostra e <span class="math inline">\(F_{0}(x)\)</span> é a teórica.</p>
+</div><div class="column" style="width:50%;">
+<p><strong>Duas amostras</strong></p>
+<p><span class="math display">\[
+\left\{
+\begin{array}{ll}
+H_0: &amp; S_{1}(x) = S_{2}(x) \text{;} \\
+H_1: &amp; S_{1}(x) \neq S_{2}(x) \text{.}
 \end{array}
 \right.
 \]</span></p>
+<p><span class="math inline">\(S_{1}(x)\)</span> é a função de distribuição empírica da amostra 1 e <span class="math inline">\(S_{2}(x)\)</span> é a função de distribuição empírica da amostra 2.</p>
+</div></div>
 </section>
-<section id="estatística-do-teste" class="slide level2">
-<h2>Estatística do teste</h2>
-<p>A estatística de Kolmogorov–Smirnov para uma dada função distribuição acumulada <span class="math inline">\(F(x)\)</span> é</p>
-<p><span class="math display">\[D_{n} = \text{sup}_{x} | F_{n}(x) - F(x) |\]</span></p>
-<p>A estatística de teste <span class="math inline">\(D\)</span> é calculada a partir das distribuições de frequências acumuladas dos grupos, e então, utiliza-se essa estatística <span class="math inline">\(D\)</span> para avaliar as hipóteses. Essa estatística é o maior valor encontrado ao realizar a diferença absoluta entre as proporções de frequências relativas acumuladas dos dois grupos.</p>
-<p>Para avaliar as hipóteses é necessário obter o valor crítico <span class="math inline">\(D_c\)</span> (ver SHESKIN, 2003) fazendo uso apenas dos tamanhos das amostras (<span class="math inline">\(n_1\)</span>, <span class="math inline">\(n_2\)</span>) e o nível de significância escolhido. Assim, em um teste de hipóteses bilateral a hipótese nula é rejeitada quando:</p>
+<section id="estatística-do-teste-e-valor-crítico-no-caso-de-uma-amostra" class="slide level2">
+<h2>Estatística do teste e valor crítico no caso de uma amostra</h2>
+<p>A estatística de Kolmogorov–Smirnov para uma dada função distribuição acumulada <span class="math inline">\(F(x)\)</span> é, no caso de apenas uma amostra:</p>
+<p><span class="math display">\[D = \text{máx} | F_{0}(x) - S(x) |\]</span></p>
+<p>Para avaliar as hipóteses é necessário obter o valor crítico <span class="math inline">\(D_c\)</span> obtido pela <strong>Tábua E - Siegel</strong> bilateral. Assim, em um teste de hipóteses bilateral a hipótese nula é rejeitada quando:</p>
 <p><span class="math display">\[|D| \geq D_c\]</span>.</p>
+</section>
+<section id="estatística-do-teste-e-valor-crítico-para-duas-amostras" class="slide level2">
+<h2>Estatística do teste e valor crítico para duas amostras</h2>
+<p>Estatística do teste: <span class="math inline">\(D = \text{máx} | S_{2}(x) - S_{1}(x)|\)</span> e os valores criíticos para:</p>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Amostras pequenas</a></li><li><a href="#tabset-1-2">Amostras grandes</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<p>Amostras pequenas: <span class="math inline">\(n_1\)</span> e <span class="math inline">\(n_2\)</span> <span class="math inline">\(\leq40\)</span></p>
+<ul>
+<li><span class="math inline">\(n_1 = n_2\)</span>: Tábua L - Siegel;</li>
+<li><span class="math inline">\(n_1 \neq n_2\)</span>: Tabela 9 - Campos.</li>
+</ul>
+</div>
+<div id="tabset-1-2">
+<p>Amostras grandes: <span class="math inline">\(n_1\)</span> ou <span class="math inline">\(n_2\)</span> <span class="math inline">\(&gt;40\)</span></p>
+<ul>
+<li>Bilateral: Tábua M - Siegel;</li>
+<li>Unilateral: utiliza-se a estatística <span class="math inline">\(\chi^2\)</span>, que tem distribuição qui-quadrado com 2 graus de liberdade.</li>
+</ul>
+<p><span class="math display">\[
+\chi^2 = 4D^2\frac{n_1 n_2}{n_1 + n_2}
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="impacto" class="slide level2">
+<h2>Impacto</h2>
+<p>É um dos testes mais usados em estatística para verificação de aderência e comparação de distribuições.</p>
+<p>Simples, mas poderoso, especialmente para dados contínuos e unidimensionais.</p>
+<p>Inspirou variantes como:</p>
+<ul>
+<li><p><strong>Lilliefors</strong> (para casos em que os parâmetros são estimados)</p></li>
+<li><p><strong>Anderson–Darling</strong> (mais sensível nas caudas)</p></li>
+</ul>
 </section>
 <section id="função-no-r" class="slide level2">
 <h2>Função no R</h2>
+<p>Os argumentos <code>x</code> e <code>y</code> são os vetores dos valores dos grupos a serem comparados, enquanto o argumento <code>alternative</code> permite escolher o formato do teste de hipóteses desejado. A função retorna a estatística de teste e o <em>valor-p</em>. A hipótese nula é rejeitada quando <em>valor-p</em> <span class="math inline">\(\leq 0,05\)</span> (com nível de significância de 5%).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>stats<span class="sc">::</span><span class="fu">ks.test</span>(x, y, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Os argumentos <code>x</code> e <code>y</code> são os vetores dos valores dos grupos a serem comparados, enquanto o argumento <code>alternative</code> permite escolher o formato do teste de hipóteses desejado. A função retorna a estatística de teste e o <em>valor-p</em>. A hipótese nula é rejeitada quando <em>valor-p</em> <span class="math inline">\(\leq 0,05\)</span> (com nível de significância de 5%).</p>
 <p>Ela pode ser utilizada para comparar um único grupo, colocando a distribuição acumulada no lugar de <code>y</code>, como mostra abaixo (no caso, compara-se com a acumulada da normal)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>stats<span class="sc">::</span><span class="fu">ks.test</span>(x, <span class="st">"pnorm"</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -451,8 +512,6 @@ H_1: &amp; \text{distribuição}_1 \neq \text{distribuição}_2 \text{.}
 </div>
 </div>
 </section>
-
-
     </div>
   </div>
 

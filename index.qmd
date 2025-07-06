@@ -10,66 +10,139 @@ editor: visual
 ---
 
 
-## História
+## História do teste
 
-<hr style="border:1px solid #ccc; margin-top: 10px; margin-bottom: 20px;" />
+### Necessidade
 
+Necessidade de criar uma forma simples e não paramétrica de verificar se os dados **seguem uma distribuição conhecida** ou se **duas amostras são semelhantes**, sem precisar assumir *normalidade*.
 
-Nomeado por conta de Andrey Kolmogorov e Nikolai Smirnov[^1].
+### Surgimento
 
-[^1]: Os dois foram matemáticos russos
+1933 – O matemático **Andrey Kolmogorov** (russo) formulou a base teórica do teste, introduzindo a função de *distribuição empírica* e propondo um método para medir a diferença entre ela e uma *distribuição teórica*, ou seja, apenas para **uma amostra**.
+
+1948 – O estatístico **Nikolai Smirnov**, também russo, expandiu e formalizou o trabalho de Kolmogorov, tornando o teste mais aplicável na prática estatística e criando a versão para **duas amostras**.
+
 
 ## Objetivo
 
-<hr style="border:1px solid #ccc; margin-top: 10px; margin-bottom: 20px;" />
+Também conhecido como **Teste K-S** ou **Teste KS**, o Teste de Kolmogorov-Smirnov é utilizado para verificar se:
+
+- Uma amostra segue uma determinada distribuição teórica (como normal, uniforme, etc.) → teste de aderência
+
+- Duas amostras, independentes/não pareadas, vêm da mesma distribuição → teste de comparação entre distribuições
+
+> **Exigências:** requer que os dados seguem escala ordinal.
 
 
+## Limitações
 
+**1. Sensibilidade**
 
-Também conhecido como **teste K-S** ou **teste KS**
+A construção desse teste é sensível a qualquer diferença de tendência central, dispersão, assimetria e curtose entre as distribuições postas em comparação. Com isso, o resultado do teste é fortemente impactado caso as distribuições tenham valores distintos entre essas medidas.
 
-Este teste também pode ser utilizado para comparar a igualdade das distribuições de duas amostras indepedentes.
+**2. Especificação dos parâmetros** 
 
-O Teste de Kolmogorov-Smirnov é utilizado para comparar a distribuição de probabilidade entre dois grupos independentes (ou não pareados), podendo ser de qualquer distribuição. A construção desse teste é sensível a qualquer diferença de tendência central, dispersão, assimetria e curtose entre as distribuições postas em comparação. Com isso, o resultado do teste é fortemente impactado caso as distribuições tenham valores distintos entre essas medidas.
+Requer que a distribuição teórica seja completamente especificada (sem estimar parâmetros dos dados). Se os parâmetros forem estimados da própria amostra (ex: média e desvio padrão), deve-se usar o teste de Shapiro-Wilk ou o teste de Lilliefors no lugar.
 
-
-## Exigências 
 
 ## Hipóteses 
 
 As hipóteses apresentam a forma abaixo:
 
+::::: columns
+::: {.column width="50%"}
+**Uma amostra**
+
 $$
 \left\{
 \begin{array}{ll}
-H_0: & \text{distribuição}_1 = \text{distribuição}_2 \text{,} \\
-H_1: & \text{distribuição}_1 \neq \text{distribuição}_2 \text{.}
+H_0: & F(x) = F_{0}(x) \text{;} \\
+H_1: & F(x) \neq F_{0}(x) \text{.}
+\end{array}
+\right.
+$$
+$S(x)$ é a função de distribuição empírica da amostra e 
+$F_{0}(x)$ é a teórica.
+ 
+:::
+
+::: {.column width="50%"}
+**Duas amostras**
+
+$$
+\left\{
+\begin{array}{ll}
+H_0: & S_{1}(x) = S_{2}(x) \text{;} \\
+H_1: & S_{1}(x) \neq S_{2}(x) \text{.}
 \end{array}
 \right.
 $$
 
-## Estatística do teste
+$S_{1}(x)$ é a função de distribuição empírica da amostra 1 e 
+$S_{2}(x)$ é a função de distribuição empírica da amostra 2. 
 
-A estatística de Kolmogorov–Smirnov para uma dada função distribuição acumulada $F(x)$ é 
+:::
+:::::
 
-$$D_{n} = \text{sup}_{x} | F_{n}(x) - F(x) |$$
 
-A estatística de teste $D$ é calculada a partir das distribuições de frequências acumuladas dos grupos, e então, utiliza-se essa estatística $D$ para avaliar as hipóteses. Essa estatística é o maior valor encontrado ao realizar a diferença absoluta entre as proporções de frequências relativas acumuladas dos dois grupos. 
 
-Para avaliar as hipóteses é necessário obter o valor crítico $D_c$ (ver SHESKIN, 2003) fazendo uso apenas dos tamanhos das amostras ($n_1$, $n_2$) e o nível de significância escolhido. Assim, em um teste de hipóteses bilateral a hipótese nula é rejeitada quando: 
+## Estatística do teste e valor crítico no caso de uma amostra
+
+A estatística de Kolmogorov–Smirnov para uma dada função distribuição acumulada $F(x)$ é, no caso de apenas uma amostra:
+
+$$D = \text{máx} | F_{0}(x) - S(x) |$$
+
+Para avaliar as hipóteses é necessário obter o valor crítico $D_c$ obtido pela **Tábua E - Siegel** bilateral. Assim, em um teste de hipóteses bilateral a hipótese nula é rejeitada quando: 
 
 $$|D| \geq D_c$$.
 
 
+## Estatística do teste e valor crítico para duas amostras
+
+Estatística do teste: $D = \text{máx} | S_{2}(x) - S_{1}(x)|$ e os valores criíticos para: 
+
+
+::: panel-tabset
+### Amostras pequenas 
+
+ Amostras pequenas:  $n_1$ e $n_2$ $\leq40$  
+ 
+ - $n_1 = n_2$: Tábua L - Siegel;
+ - $n_1 \neq n_2$: Tabela 9 - Campos.
+
+###  Amostras grandes 
+
+ Amostras grandes: $n_1$ ou $n_2$ $>40$  
+ 
+ - Bilateral: Tábua M - Siegel;
+ - Unilateral: utiliza-se a estatística $\chi^2$, que tem distribuição qui-quadrado com 2 graus de liberdade.
+
+$$
+\chi^2 = 4D^2\frac{n_1 n_2}{n_1 + n_2}
+$$ 
+ 
+:::
+
+
+## Impacto 
+
+É um dos testes mais usados em estatística para verificação de aderência e comparação de distribuições.
+
+Simples, mas poderoso, especialmente para dados contínuos e unidimensionais.
+
+Inspirou variantes como:
+
+- **Lilliefors** (para casos em que os parâmetros são estimados)
+
+- **Anderson–Darling** (mais sensível nas caudas)
 
 ## Função no R
+
+Os argumentos `x` e `y` são os vetores dos valores dos grupos a serem comparados, enquanto o argumento `alternative` permite escolher o formato do teste de hipóteses desejado. A função retorna a estatística de teste e o *valor-p*. A hipótese nula é rejeitada quando *valor-p* $\leq 0,05$ (com nível de significância de 5\%).
 
 ```{r,echo=TRUE, eval=FALSE, message=FALSE,warning =FALSE,error=FALSE}
 stats::ks.test(x, y, alternative = "two.sided")
 ```
-
-Os argumentos `x` e `y` são os vetores dos valores dos grupos a serem comparados, enquanto o argumento `alternative` permite escolher o formato do teste de hipóteses desejado. A função retorna a estatística de teste e o *valor-p*. A hipótese nula é rejeitada quando *valor-p* $\leq 0,05$ (com nível de significância de 5\%).
-
 
 Ela pode ser utilizada para comparar um único grupo, colocando a distribuição acumulada no lugar de `y`, como mostra abaixo (no caso, compara-se com a acumulada da normal)
 

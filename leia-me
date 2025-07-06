@@ -15,3 +15,4 @@
    
 # artigo que utiliza este método 
 # aplicação no r 
+Para avaliar as hipóteses é necessário obter o valor crítico $D_c$ (ver SHESKIN, 2003) fazendo uso apenas dos tamanhos das amostras ($n_1$, $n_2$) e o nível de significância escolhido. Assim, em um teste de hipóteses bilateral a hipótese nula é rejeitada quando: 
