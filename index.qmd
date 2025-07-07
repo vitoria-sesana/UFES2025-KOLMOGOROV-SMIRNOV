@@ -151,4 +151,13 @@ stats::ks.test(x, "pnorm", alternative = "two.sided")
 ```
 
 
+# Artigo
+
+
+##
+
+
+<iframe src="2013_art_mmlopes.pdf" width="100%" height="100%"></iframe>
+
+
 # Agradecemos pela atenção!
